@@ -1,5 +1,7 @@
 # 2025 Fall ECE Senior Design Miniproject
 
+In this branch, I added two picture files of the circuit wired up to the raspberry pico and the schematic for it.
+
 [Project definition](./Project.md)
 
 This project uses the Raspberry Pi Pico 2WH SC1634 (wireless, with header pins).
