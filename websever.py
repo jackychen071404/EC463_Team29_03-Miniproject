@@ -5,7 +5,7 @@ import time
 import uasyncio as asyncio
 
 # --- Hardware Setup ---
-photo_sensor = machine.ADC(28)
+photo_sensor = machine.ADC(28) #pin setup
 
 # --- Wi-Fi Configuration ---
 SSID = "BU Guest (unencrypted)"
@@ -58,3 +58,4 @@ try:
     asyncio.run(main())
 except KeyboardInterrupt:
     print("Server stopped.")
+
