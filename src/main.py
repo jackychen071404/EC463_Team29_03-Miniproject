@@ -4,8 +4,7 @@ import time
 import uasyncio as asyncio
 import json
 import ubinascii
-    
-# ---------------- CONFIG ----------------
+
 # -------------------------
 # Hardware Setup
 # -------------------------
@@ -16,6 +15,29 @@ photo_sensor = machine.ADC(PHOTO_SENSOR_PIN)
 buzzer = machine.PWM(machine.Pin(BUZZER_PIN))
 buzzer.freq(440)
 buzzer.duty_u16(0)  # Start silent
+
+# -------------------------
+# RGB LED Setup
+# -------------------------
+red = machine.PWM(machine.Pin(21))
+green = machine.PWM(machine.Pin(20))
+blue = machine.PWM(machine.Pin(19))
+
+red.freq(1000)
+green.freq(1000)
+blue.freq(1000)
+
+# Global color state
+current_color = (0, 0, 0)
+
+def set_color(r, g, b):
+    """Set RGB color and save state."""
+    global current_color
+    current_color = (r, g, b)
+    red.duty_u16(r)
+    green.duty_u16(g)
+    blue.duty_u16(b)
+    print(f"Set color -> R:{r} G:{g} B:{b}")
 
 # -------------------------
 # Device Identification
@@ -29,8 +51,6 @@ DEVICE_ID = ubinascii.hexlify(wlan.config("mac")).decode()
 # -------------------------
 SSID = "BU Guest (unencrypted)"  # Replace with your SSID
 PASSWORD = ""                     # Empty if open network
-
-# -------------------------
 
 print("Connecting to Wi-Fi...")
 wlan.connect(SSID, PASSWORD)
@@ -52,7 +72,6 @@ def stop_buzzer():
     buzzer.duty_u16(0)
     print("Buzzer stopped")
 
-
 async def play_tone(freq: int, duration_ms: int, duty: float = 0.5):
     """Play a single tone asynchronously."""
     if freq <= 0 or duration_ms <= 0:
@@ -65,7 +84,6 @@ async def play_tone(freq: int, duration_ms: int, duty: float = 0.5):
     await asyncio.sleep_ms(duration_ms)
     stop_buzzer()
 
-
 async def play_melody(notes: list, gap_ms: int = 20):
     """Play a sequence of notes asynchronously."""
     print(f"Playing melody with {len(notes)} notes, gap={gap_ms}ms")
@@ -75,13 +93,27 @@ async def play_melody(notes: list, gap_ms: int = 20):
         await play_tone(freq, duration)
         await asyncio.sleep_ms(gap_ms)
 
-
 def read_light_sensor():
     """Return photoresistor readings as raw, norm, and estimated lux."""
     raw = photo_sensor.read_u16()
     norm = raw / 65535
     lux_est = norm * 200
     return {"raw": raw, "norm": round(norm, 3), "lux_est": round(lux_est, 1)}
+
+async def blink_led(r, g, b, duration_ms=500):
+    """Blink LED once and restore previous color."""
+    global current_color
+    original_color = current_color
+    set_color(r, g, b)  # Set blink color
+
+    # Hold the color for the duration while yielding to asyncio
+    elapsed = 0
+    step = 50  # 50 ms steps
+    while elapsed < duration_ms:
+        await asyncio.sleep_ms(step)
+        elapsed += step
+
+    set_color(*original_color)  # Restore previous color
 
 # -------------------------
 # HTTP Request Handler
@@ -108,6 +140,14 @@ async def handle_client(reader, writer):
         elif method == "GET" and url == "/sensor":
             response = json.dumps(read_light_sensor())
 
+        elif method == "GET" and url == "/led":
+            # Blink once (0.3s on, 0.3s off)
+            set_color(65535, 65535, 65535)  # white for blink
+            await asyncio.sleep_ms(300)
+            set_color(0, 0, 0)  # off
+            response = json.dumps({"blink": "done"})
+
+
         # ---------------------
         # POST Endpoints
         # ---------------------
@@ -118,10 +158,9 @@ async def handle_client(reader, writer):
             duration = int(data.get("ms", 200))
             duty = float(data.get("duty", 0.5))
 
-            # Cancel currently playing tone/melody
             if current_task:
                 current_task.cancel()
-                await asyncio.sleep_ms(10)  # Small pause to ensure cancellation
+                await asyncio.sleep_ms(10)
             current_task = asyncio.create_task(play_tone(freq, duration, duty))
 
             response = json.dumps({"playing": True, "until_ms_from_now": duration})
@@ -132,7 +171,6 @@ async def handle_client(reader, writer):
             notes = data.get("notes", [])
             gap_ms = int(data.get("gap_ms", 20))
 
-            # Cancel currently playing tone/melody
             if current_task:
                 current_task.cancel()
                 await asyncio.sleep_ms(10)
@@ -140,14 +178,27 @@ async def handle_client(reader, writer):
 
             response = json.dumps({"queued": len(notes)})
 
+
+        elif method == "POST" and url == "/led":
+            try:
+                # Blink red 5 times
+                for _ in range(5):
+                    set_color(0, 65535, 0)  # red on
+                    await asyncio.sleep_ms(300)
+                    set_color(0, 0, 0)      # off
+                    await asyncio.sleep_ms(300)
+
+                response = json.dumps({"led_blink": "red 5 times"})
+            except Exception as e:
+                response = json.dumps({"error": str(e)})
+
+
         else:
-            # Unknown endpoint
             writer.write(b"HTTP/1.0 404 Not Found\r\n\r\n")
             await writer.drain()
             await writer.aclose()
             return
 
-        # Send response
         writer.write(
             "HTTP/1.0 200 OK\r\nContent-Type: {}\r\n\r\n".format(content_type).encode()
         )
@@ -178,3 +229,7 @@ try:
 except KeyboardInterrupt:
     print("Stopping server...")
     stop_buzzer()
+    set_color(0, 0, 0)  # Turn off LED
+    red.deinit()
+    green.deinit()
+    blue.deinit()
