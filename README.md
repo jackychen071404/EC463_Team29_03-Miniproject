@@ -157,7 +157,7 @@ The first test was to make sure that the Raspberry Pi board could be succesfully
 
 ## Mini Project Image
 
-<img width="3660" height="4217" alt="miniproject_image-min" src="https://github.com/user-attachments/assets/451bfe10-e3f6-4e14-b0b9-5a7acd98b009" />
+<img width="1500" height="2000" alt="miniproject_image-min" src="https://github.com/user-attachments/assets/451bfe10-e3f6-4e14-b0b9-5a7acd98b009" />
 
 ## Notes
 
