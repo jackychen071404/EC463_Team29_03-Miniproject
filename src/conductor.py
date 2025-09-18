@@ -22,12 +22,18 @@ A3 = 220
 B3 = 247
 
 C4 = 262
+C4Sharp = 277
 D4 = 294
+D4Sharp = 311
 E4 = 330
 F4 = 349
+F4Sharp = 370
 G4 = 392
+G4Sharp = 415
 A4 = 440
+A4Sharp = 466
 B4 = 494
+B4Sharp = 523
 C5 = 523
 
 Db3 = 139
