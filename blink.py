@@ -7,7 +7,7 @@ print("LED starts flashing...")
 while True:
     try:
         pin.toggle()    #Toggle the LED state (ON -> OFF, OFF -> ON)
-        sleep(5) # sleep 1sec
+        sleep(1) # sleep 1sec
     except KeyboardInterrupt:
         break
 pin.off()
