@@ -148,7 +148,7 @@ For the question below, feel free to use musical scale of your choice!
 ## Designs and Changes in Design
 The board was wired accordingly to the wiring diagram with a 10k ohm resistor. Our first design simply played a tone from the program to the board. Then, the design improved when the board was able to react to changes in luminence. We did multiple iterations of testing to make sure that the luminence was accurately being read. The project was tweaked when we connected the device to the network and then the final design integrated the LED onto the board as well.
 
-<img src="IMG_1452.jpg"
+<img src="Miniproject_Schematic.jpg"
      width="50%"
      style="display:block; margin:auto; transform: rotate(180deg);">
 
@@ -157,7 +157,7 @@ The first test was to make sure that the Raspberry Pi board could be succesfully
 
 ## Mini Project Image
 
-<img width="3660" height="4217" alt="miniproject_image-min" src="https://github.com/user-attachments/assets/451bfe10-e3f6-4e14-b0b9-5a7acd98b009" />
+<img width="1500" height="2000" alt="miniproject_image-min" src="https://github.com/user-attachments/assets/451bfe10-e3f6-4e14-b0b9-5a7acd98b009" />
 
 ## Notes
 
