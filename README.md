@@ -148,7 +148,7 @@ For the question below, feel free to use musical scale of your choice!
 ## Designs and Changes in Design
 The board was wired accordingly to the wiring diagram with a 10k ohm resistor. Our first design simply played a tone from the program to the board. Then, the design improved when the board was able to react to changes in luminence. We did multiple iterations of testing to make sure that the luminence was accurately being read. The project was tweaked when we connected the device to the network and then the final design integrated the LED onto the board as well.
 
-<img src="Miniproject_Schematic.jpg"
+<img src="images/Miniproject_Schematic.jpg"
      width="50%"
      style="display:block; margin:auto; transform: rotate(180deg);">
 
