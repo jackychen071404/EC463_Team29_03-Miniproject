@@ -154,6 +154,11 @@ The board was wired accordingly to the wiring diagram with a 10k ohm resistor. O
 
 ## Testing
 The first test was to make sure that the Raspberry Pi board could be succesfully connected to the device. We successfully connected the Raspberry Pi board to the device through Visual Studio Code. After we connected the device, sound was playing from the board which let us know that the board was running the program. Then, using the webserver.py file, the board became connected to the WiFi and we tested the functionality by shining light on the sensor and seeing the luminence values increase. The led.py file was used to test the connection of the LED and the LED colors were shown. The photoresistor test file was utilized to test the mapping between luminence and tone where the tone decreases with luminence. By shining a light on the sensor, we saw the tone increase and the opposite effect when there wasn't a light on the sensor. Through these sets of test and testing files, we were able to determine if our mini project was successful and performing testing throughout the design process made it easier to pinpoint problems that we encountered. 
+
+## Mini Project Image
+
+<img width="3660" height="4217" alt="miniproject_image-min" src="https://github.com/user-attachments/assets/451bfe10-e3f6-4e14-b0b9-5a7acd98b009" />
+
 ## Notes
 
 Pico MicroPython time.sleep() doesn't error for negative values even though such are obviously incorrect--it is undefined for a system to sleep for negative time.
