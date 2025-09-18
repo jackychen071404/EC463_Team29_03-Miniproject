@@ -61,6 +61,86 @@ For the question below, feel free to use musical scale of your choice!
 
 [Music Examples](https://github.com/twisst/Music-for-Raspberry-Pi-Pico/blob/main/play.py)
 
+---
+## HTTP API Endpoints
+
+### GET
+- **`/health`**
+  - Returns device health info:
+    ```json
+    {
+      "status": "ok",
+      "device_id": "<DEVICE_ID>",
+      "api": "1.0.0"
+    }
+    ```
+
+- **`/sensor`**
+  - Returns light sensor readings:
+    ```json
+    {
+      "raw": 12345,
+      "norm": 0.188,
+      "lux_est": 37.6
+    }
+    ```
+
+- **`/led`**
+  - Blinks the LED **once** (white for 0.3s, then off).
+  - Response:
+    ```json
+    {
+      "blink": "done"
+    }
+    ```
+
+### POST
+- **`/tone`**
+  - Plays a single tone on the buzzer.
+  - Request body:
+    ```json
+    {
+      "freq": 440,
+      "ms": 500,
+      "duty": 0.5
+    }
+    ```
+  - Response:
+    ```json
+    {
+      "playing": true,
+      "until_ms_from_now": 500
+    }
+    ```
+
+- **`/melody`**
+  - Plays a sequence of tones (melody).
+  - Request body:
+    ```json
+    {
+      "notes": [
+        {"freq": 440, "ms": 300},
+        {"freq": 494, "ms": 300}
+      ],
+      "gap_ms": 20
+    }
+    ```
+  - Response:
+    ```json
+    {
+      "queued": 2
+    }
+    ```
+
+- **`/led`**
+  - Blinks the LED **red 5 times** (0.3s on/off each).
+  - Response:
+    ```json
+    {
+      "led_blink": "red 5 times"
+    }
+    ```
+---
 
 ## Notes
 
@@ -72,3 +152,5 @@ Duty cycle greater than 1 is undefined, so we clip the duty cycle to the range [
 
 * [Pico 2WH pinout diagram](https://datasheets.raspberrypi.com/picow/pico-2-w-pinout.pdf) shows the connections to analog and digital IO.
 * Getting Started with Pi Pico [book](https://datasheets.raspberrypi.com/pico/getting-started-with-pico.pdf)
+* [Setting up Pico for with VSCode IDE](https://www.raspberrypi.com/news/get-started-with-raspberry-pi-pico-series-and-vs-code/) to wotk in a comfortable environment.
+
