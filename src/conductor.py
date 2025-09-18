@@ -13,6 +13,14 @@ PICO_IPS = [
 ]
 
 # --- Notes (frequencies in Hz) ---
+C3 = 131
+D3 = 147
+E3 = 165
+F3 = 175
+G3 = 196
+A3 = 220
+B3 = 247
+
 C4 = 262
 D4 = 294
 E4 = 330
@@ -22,15 +30,32 @@ A4 = 440
 B4 = 494
 C5 = 523
 
+Db3 = 139
+Eb3 = 156
+Gb3 = 185
+Ab3 = 208
+Bb3 = 233
+
+Db4 = 277
+Eb4 = 311
+Gb4 = 370
+Ab4 = 415
+Bb4 = 466
+
+Db5 = 554
+Eb5 = 622
+Gb5 = 740
+Ab5 = 831
+Bb5 = 932
+
 # --- Melody: "Mary Had a Little Lamb" with variable note durations ---
 # Format: (frequency_in_Hz, duration_in_ms)
 SONG = [
-    (E4, 400), (D4, 400), (C4, 400), (D4, 400),
-    (E4, 400), (E4, 400), (E4, 800),  # "Mary had a little lamb"
-    (D4, 400), (D4, 400), (D4, 800),  # "little lamb"
-    (E4, 400), (G4, 400), (G4, 800),  # "Mary had a little lamb"
-    (E4, 400), (D4, 400), (C4, 400), (D4, 400),
-    (E4, 400), (E4, 400), (E4, 400), (E4, 800)
+    (F4, 400), (C3, 400),
+    (Ab4, 400), (C3, 400),
+    (Gb4, 400), (C3, 400),
+    (Eb4, 400), (C3, 400),
+    (C5, 800)
 ]
 
 # --- Conductor Functions ---
