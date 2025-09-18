@@ -2,6 +2,8 @@
 
 In this branch, I added two picture files of the circuit wired up to the raspberry pico and the schematic for it.
 
+Demo Link: https://drive.google.com/file/d/1K4oS3ztS8SOs_eQUJP-8AAWCwnin5PMz/view?usp=drive_link
+
 [Project definition](./Project.md)
 
 This project uses the Raspberry Pi Pico 2WH SC1634 (wireless, with header pins).
@@ -144,7 +146,7 @@ For the question below, feel free to use musical scale of your choice!
     ```
 ---
 ## Designs and Changes in Design
-The board was wired accordingly to the wiring diagram with a 10k ohm resistor. Our first design simply played a tone from the program to the board. Then, the design improved when the board was able to react to changes in luminence. The project was tweaked when we connected the device to the network and then the final design integrated the LED onto the board as well.
+The board was wired accordingly to the wiring diagram with a 10k ohm resistor. Our first design simply played a tone from the program to the board. Then, the design improved when the board was able to react to changes in luminence. We did multiple iterations of testing to make sure that the luminence was accurately being read. The project was tweaked when we connected the device to the network and then the final design integrated the LED onto the board as well.
 
 <img src="IMG_1452.jpg"
      width="50%"
